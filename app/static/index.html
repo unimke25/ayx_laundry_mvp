@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AYX Limited Laundry</title>
+<link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">AYX <span>Laundry</span></div>
+  <nav class="mode-switch">
+    <button id="mode-customer" class="mode-btn active">Customer</button>
+    <button id="mode-admin" class="mode-btn">Admin</button>
+  </nav>
+  <div class="session-info">
+    <span id="session-label">Not signed in</span>
+    <button id="logout-btn" class="link-btn hidden">Log out</button>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- ============ CUSTOMER VIEW ============ -->
+  <section id="customer-view">
+
+    <!-- Auth panel (shown when logged out) -->
+    <div id="customer-auth" class="card">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="login">Log In</button>
+        <button class="tab-btn" data-tab="register">Register</button>
+      </div>
+
+      <form id="login-form" class="tab-panel active">
+        <label>Email <input type="email" id="login-email" required /></label>
+        <label>Password <input type="password" id="login-password" required /></label>
+        <button type="submit">Log In</button>
+        <p class="form-msg" id="login-msg"></p>
+      </form>
+
+      <form id="register-form" class="tab-panel">
+        <label>Full name <input type="text" id="register-name" required /></label>
+        <label>Email <input type="email" id="register-email" required /></label>
+        <label>Password <input type="password" id="register-password" minlength="8" required /></label>
+        <button type="submit">Create Account</button>
+        <p class="form-msg" id="register-msg"></p>
+      </form>
+    </div>
+
+    <!-- Dashboard (shown when logged in) -->
+    <div id="customer-dashboard" class="hidden">
+
+      <div class="card">
+        <h2>Subscription</h2>
+        <div id="subscription-status" class="status-box">No subscription yet.</div>
+        <div id="plans-grid" class="plans-grid"></div>
+        <p class="form-msg" id="subscribe-msg"></p>
+      </div>
+
+      <div class="card">
+        <h2>Book a Pickup</h2>
+        <form id="order-form">
+          <label>Pickup address <input type="text" id="order-address" required /></label>
+          <label>Pickup time <input type="datetime-local" id="order-pickup-time" required /></label>
+          <label>Delivery time (optional) <input type="datetime-local" id="order-delivery-time" /></label>
+          <label>Notes <textarea id="order-notes" rows="2"></textarea></label>
+          <button type="submit">Book Pickup</button>
+          <p class="form-msg" id="order-msg"></p>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>My Orders</h2>
+        <button id="refresh-orders" class="link-btn">Refresh</button>
+        <table class="data-table">
+          <thead>
+            <tr><th>Address</th><th>Pickup</th><th>Status</th><th>Plan</th></tr>
+          </thead>
+          <tbody id="orders-table-body"></tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ ADMIN VIEW ============ -->
+  <section id="admin-view" class="hidden">
+
+    <div id="admin-auth" class="card">
+      <h2>Admin Log In</h2>
+      <form id="admin-login-form">
+        <label>Email <input type="email" id="admin-login-email" required /></label>
+        <label>Password <input type="password" id="admin-login-password" required /></label>
+        <button type="submit">Log In</button>
+        <p class="form-msg" id="admin-login-msg"></p>
+      </form>
+      <details>
+        <summary>Need a staff account?</summary>
+        <form id="admin-register-form">
+          <label>Full name <input type="text" id="admin-reg-name" required /></label>
+          <label>Email <input type="email" id="admin-reg-email" required /></label>
+          <label>Password <input type="password" id="admin-reg-password" minlength="8" required /></label>
+          <button type="submit">Create Staff Account</button>
+          <p class="form-msg" id="admin-register-msg"></p>
+        </form>
+      </details>
+    </div>
+
+    <div id="admin-dashboard" class="hidden">
+      <div class="card">
+        <h2>All Orders</h2>
+        <div class="filter-row">
+          <label>Filter by status
+            <select id="status-filter">
+              <option value="">All</option>
+              <option value="PENDING">Pending</option>
+              <option value="PICKED_UP">Picked Up</option>
+              <option value="IN_PROGRESS">In Progress</option>
+              <option value="DELIVERED">Delivered</option>
+              <option value="CANCELLED">Cancelled</option>
+            </select>
+          </label>
+          <button id="admin-refresh-orders" class="link-btn">Refresh</button>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr><th>Address</th><th>Pickup</th><th>Status</th><th>Plan</th><th>Update</th></tr>
+          </thead>
+          <tbody id="admin-orders-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
